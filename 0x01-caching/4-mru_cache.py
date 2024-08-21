@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-This module implements a Most Recently Used (MRU) caching strategy.
+"""Most Recently Used caching module.
 """
 from collections import OrderedDict
 
@@ -8,59 +7,32 @@ from base_caching import BaseCaching
 
 
 class MRUCache(BaseCaching):
-    """
-    MRUCache class provides a caching mechanism that stores and retrieves
-    items from a dictionary using the Most Recently Used removal strategy.
-    When the cache limit is reached, least recently used item is discarded.
+    """Represents an object that allows storing and
+    retrieving items from a dictionary with an MRU
+    removal mechanism when the limit is reached.
     """
     def __init__(self):
-        """
-        Initialize the cache with an empty OrderedDict.
+        """Initializes the cache.
         """
         super().__init__()
         self.cache_data = OrderedDict()
 
     def put(self, key, item):
-        """
-        Add an item to the cache.
-
-        Args:
-            key (str): The key associated with the item.
-            item (obj): The item to be cached.
-
-        If the key is already present in the cache, update its value.
-        If the cache is full and a new item needs to be added, discard the
-        least recently used item before adding the new one.
+        """Adds an item in the cache.
         """
         if key is None or item is None:
             return
-
-        cache_full = False
-        do
-            if key not in self.cache_data:
-                if len(self.cache_data) + 1 > BaseCaching.MAX_ITEMS:
-                    mru_key, _ = self.cache_data.popitem(False)
-                    print("DISCARD:", mru_key)
-                    cache_full = True
-                else:
-                    self.cache_data[key] = item
-                    self.cache_data.move_to_end(key, last=False)
-            else:
-                self.cache_data[key] = item
-        while cache_full
+        if key not in self.cache_data:
+            if len(self.cache_data) + 1 > BaseCaching.MAX_ITEMS:
+                mru_key, _ = self.cache_data.popitem(False)
+                print("DISCARD:", mru_key)
+            self.cache_data[key] = item
+            self.cache_data.move_to_end(key, last=False)
+        else:
+            self.cache_data[key] = item
 
     def get(self, key):
-        """
-        Retrieve an item from the cache.
-
-        Args:
-            key (str): The key associated with the item.
-
-        Returns:
-            obj: The cached item if present, otherwise None.
-
-        If the key is found in the cache, move to end of the OrderedDict
-        to mark it as the most recently used item.
+        """Retrieves an item by key.
         """
         if key is not None and key in self.cache_data:
             self.cache_data.move_to_end(key, last=False)
