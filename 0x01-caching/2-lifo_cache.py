@@ -9,7 +9,7 @@ from base_caching import BaseCaching
 
 class LIFOCache(BaseCaching):
     """Represents a LIFO (Last-In First-Out) cache.
-    class inherits from BaseCaching & overrides put and get methods.
+    This class inherits from BaseCaching, overrides put and get methods.
     """
     def __init__(self):
         """Initialize the cache.
@@ -20,8 +20,8 @@ class LIFOCache(BaseCaching):
 
     def put(self, key, item):
         """Add an item to the cache.
-        If the cache size exceeds the maximum allowed, discard least
-        recently added item (LIFO) to make room  4the new item.
+        If the cache size exceeds the maximum allowed, discard the least
+        recently added item (LIFO) to make room for the new item.
 
         Args:
             key (str): The key associated with the item.
@@ -29,11 +29,14 @@ class LIFOCache(BaseCaching):
         """
         if key is None or item is None:
             return
+
+        if key not in self.cache_data:
+            while len(self.cache_data) >= BaseCaching.MAX_ITEMS:
+                last_key, _ = self.cache_data.popitem(last=False)
+                print("DISCARD:", last_key)
+
         self.cache_data[key] = item
         self.cache_data.move_to_end(key, last=True)
-        if len(self.cache_data) > BaseCaching.MAX_ITEMS:
-            last_key, _ = self.cache_data.popitem(last=False)
-            print("DISCARD:", last_key)
 
     def get(self, key):
         """Retrieve an item from the cache.
