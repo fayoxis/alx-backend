@@ -8,48 +8,29 @@ from base_caching import BaseCaching
 
 
 class LIFOCache(BaseCaching):
-    """This class represents a cache with a Least-In-First-Out
-    (LIFO) removal mechanism when the cache limit is reached.
+    """Represents an object that allows storing and
+    retrieving items from a dictionary with a LIFO
+    removal mechanism when the limit is reached.
     """
     def __init__(self):
-        """Initialize the cache with an empty OrderedDict.
+        """Initializes the cache.
         """
         super().__init__()
         self.cache_data = OrderedDict()
 
     def put(self, key, item):
-        """Add an item to the cache.
-
-        If the key doesn't exist in the cache and adding the new
-        item would exceed the cache limit, remove the least
-        recently added items until there's enough space.
-        Then, add the new item to the cache.
-
-        If the key already exists, update its value and move it
-        to the end of the cache.
+        """Adds an item in the cache.
         """
         if key is None or item is None:
             return
-
         if key not in self.cache_data:
-            do_discard = False
             while len(self.cache_data) + 1 > BaseCaching.MAX_ITEMS:
                 last_key, _ = self.cache_data.popitem(True)
                 print("DISCARD:", last_key)
-                do_discard = True
-
-            if do_discard:
-                self.cache_data[key] = item
-
-        else:
-            self.cache_data[key] = item
-
+        self.cache_data[key] = item
         self.cache_data.move_to_end(key, last=True)
 
     def get(self, key):
-        """Retrieve an item from the cache by its key.
-
-        Return the value of the item if the key exists,
-        otherwise return None.
+        """Retrieves an item by key.
         """
         return self.cache_data.get(key, None)
