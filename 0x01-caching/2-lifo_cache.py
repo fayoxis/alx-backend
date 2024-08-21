@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""
-caching module that implements the Last-In First-Out (LIFO) policy.
+"""Last-In First-Out (LIFO) Caching Module
+This module implements a LIFO cache using an OrderedDict.
 """
 from collections import OrderedDict
 
@@ -8,48 +8,39 @@ from base_caching import BaseCaching
 
 
 class LIFOCache(BaseCaching):
-    """ A class that represents a cache with a LIFO removal mechanism.
-    When the cache reaches its maximum capacity,
+    """Represents a LIFO (Last-In First-Out) cache.
+    class inherits from BaseCaching & overrides put and get methods.
     """
     def __init__(self):
         """Initialize the cache.
+        Creates an empty OrderedDict to store key-value pairs.
         """
         super().__init__()
         self.cache_data = OrderedDict()
 
     def put(self, key, item):
         """Add an item to the cache.
+        If the cache size exceeds the maximum allowed, discard least
+        recently added item (LIFO) to make room  4the new item.
 
         Args:
-            key (str): The key for the item.
+            key (str): The key associated with the item.
             item (obj): The item to be cached.
-
-        If the cache is already full, the last item added
-        will be discarded before adding the new item.
         """
         if key is None or item is None:
             return
-
-        remove_item = False
-        while len(self.cache_data) + (1 if remove_item else 0) > BaseCaching.MAX_ITEMS:
-            last_key, _ = self.cache_data.popitem(True)
-            print("DISCARD:", last_key)
-            remove_item = True
-
-        if remove_item:
-            self.cache_data[key] = item
-        elif key not in self.cache_data:
-            self.cache_data[key] = item
-
+        self.cache_data[key] = item
         self.cache_data.move_to_end(key, last=True)
+        while len(self.cache_data) > BaseCaching.MAX_ITEMS:
+            last_key, _ = self.cache_data.popitem(last=False)
+            print("DISCARD:", last_key)
 
     def get(self, key):
         """Retrieve an item from the cache.
-
         Args:
-            key (str): The key for the item.
+            key (str): The key associated with the item.
 
         Returns:
-            obj: The cached item, or None if the key is not found.
+            obj: The cached item if found, None otherwise.
         """
         return self.cache_data.get(key, None)
