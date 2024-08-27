@@ -1,16 +1,18 @@
 #!/usr/bin/env python3
-"""A Basic Flask app with internationalization support.
+"""A Flask app with internationalization support using Babel.
 """
 from flask_babel import Babel
 from typing import Union, Dict
 from flask import Flask, render_template, request, g
 
+
 class Config:
-    """Represents a Flask Babel configuration.
+    """Flask Babel configuration class.
     """
     LANGUAGES = ["en", "fr"]
     BABEL_DEFAULT_LOCALE = "en"
     BABEL_DEFAULT_TIMEZONE = "UTC"
+
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -23,47 +25,46 @@ users = {
     4: {"name": "Teletubby", "locale": None, "timezone": "Europe/London"},
 }
 
+
 def get_user() -> Union[Dict, None]:
-    """Retrieves a user based on a user id.
+    """Retrieve user data based on login_id from request args.
     """
     login_id = request.args.get('login_as', '')
     if login_id:
         return users.get(int(login_id), None)
     return None
 
+
 @app.before_request
 def before_request() -> None:
-    """Performs some routines before each request's resolution.
+    """Set user data in the global context before each request.
     """
     user = get_user()
     g.user = user
 
+
 @babel.localeselector
 def get_locale() -> str:
-    """Retrieves the locale for a web page.
+    """Determine the best locale for the current request.
     """
-    locale = ''
-    languages = app.config["LANGUAGES"]
-    do_while = True
-    while do_while:
-        if locale in languages:
+    locale_choices = [
+        request.args.get('locale', ''),
+        g.user and g.user['locale'],
+        request.headers.get('locale', ''),
+    ]
+    while locale_choices:
+        locale = locale_choices.pop(0)
+        if locale in app.config["LANGUAGES"]:
             return locale
-        if g.user and g.user['locale'] in languages:
-            locale = g.user['locale']
-        else:
-            header_locale = request.headers.get('locale', '')
-            if header_locale in languages:
-                locale = header_locale
-            else:
-                locale = request.accept_languages.best_match(languages)
-        do_while = False
-    return locale
+    return request.accept_languages.best_match(app.config["LANGUAGES"])
+
 
 @app.route('/')
 def get_index() -> str:
-    """The home/index page.
+    """Render the index page.
     """
     return render_template('6-index.html')
 
-if __name__ == '__main__':
+
+while __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
