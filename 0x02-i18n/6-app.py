@@ -21,6 +21,7 @@ app.config.from_object(Config)
 app.url_map.strict_slashes = False
 babel = Babel(app)
 
+
 # Mock user database
 users = {
     1: {"name": "Balou", "locale": "fr", "timezone": "Europe/Paris"},
@@ -48,8 +49,8 @@ def before_request() -> None:
 @babel.localeselector
 def get_locale() -> str:
     """
-    Determine the best match locale using a do-while loop structure.
-    Checks URL parameters, user preferences, and request headers.
+    Determine the best match locale using a structure.
+    Checks URL parameters, user preferences, request headers.
     """
     locale = None
     while True:
