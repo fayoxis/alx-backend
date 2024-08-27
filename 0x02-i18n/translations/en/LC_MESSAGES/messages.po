@@ -1,34 +1,43 @@
-# English translations for i18n.
-# Copyright (C) 2022 Bezaleel Olakunori
-# This file is distributed under the same license as the i18n project.
-# Bezaleel Olakunori <bezaleeloci@gmail.com>, 2022.
-#
+# PROJECT English translations.
+# Copyright (C) 2024 Fayoxis(Tchaye Arthur)
+# This file is distributed under the same license as the PROJECT project.
+# Tchaye Arthur <dtchayearthur@gmail.com>, 2024.
+
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"Report-Msgid-Bugs-To: bezaleeloci@gmail.com\n"
-"POT-Creation-Date: 2022-05-10 06:39+0100\n"
-"PO-Revision-Date: 2022-05-10 11:02+0100\n"
-"Last-Translator: Bezaleel Olakunori <bezaleeloci@gmail.com>\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2023-03-01 06:52+0000\n"
+"PO-Revision-Date: 2023-03-01 06:53+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
 "Language-Team: en <LL@li.org>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.10.1\n"
+"Generated-By: Babel 2.11.0\n"
 
+# Translations for the English language.
+# The original text is represented by the msgid,
+# and the translated text is represented by the msgstr.
+
+#: templates/3-index.html:7-andsoon 
 msgid "home_title"
 msgstr "Welcome to Holberton"
 
+#: templates/3-index.html:10-andsoon 
 msgid "home_header"
 msgstr "Hello world!"
 
+#: templates/5-index.html-andsoon 
 msgid "logged_in_as"
 msgstr "You are logged in as %(username)s."
 
+#: templates/5-andsoon 
 msgid "not_logged_in"
 msgstr "You are not logged in."
 
+#: templates/index.html
 msgid "current_time_is"
 msgstr "The current time is %(current_time)s."
