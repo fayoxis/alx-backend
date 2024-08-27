@@ -1,17 +1,17 @@
-# Translations template for i18n.
-# Copyright (C) 2022 Bezaleel Olakunori
-# This file is distributed under the same license as the i18n project.
-# Bezaleel Olakunori <bezaleeloci@gmail.com>, 2022.
+# PROJECT English translations.
+# Copyright (C) 2024 Fayoxis(Tchaye Arthur)
+# This file is distributed the same license as the PROJECT project.
+# Tchaye Arthur <dtchayearthur@gmail.com>, 2024.
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"Report-Msgid-Bugs-To: bezaleeloci@gmail.com\n"
-"POT-Creation-Date: 2022-05-10 06:39+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Bezaleel Olakunori <bezaleeloci@gmail.com>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Report-Msgid-Bugs-To: dtchayearthur@gmail.com\n"
+"POT-Creation-Date: 2024-08-27 06:7+01\n"
+"PO-Revision-Date: YEAR-MO-DA HO:ZONE\n"
+"Last-Translator: Tchaye Arthur <dtchayearthur@gmail.com>\n"
+"Language-Team: LANGUAGE <>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
