@@ -1,14 +1,13 @@
 #!/usr/bin/env python3
-"""A Basic Flask app with internationalization support.
-"""
+"""Flask application with i18n support and user management."""
+
 from flask_babel import Babel
 from typing import Union, Dict
 from flask import Flask, render_template, request, g
 
 
 class Config:
-    """Represents a Flask Babel configuration.
-    """
+    """Configuration class for Flask Babel."""
     LANGUAGES = ["en", "fr"]
     BABEL_DEFAULT_LOCALE = "en"
     BABEL_DEFAULT_TIMEZONE = "UTC"
@@ -27,26 +26,20 @@ users = {
 
 
 def get_user() -> Union[Dict, None]:
-    """Retrieves a user based on a user id.
-    """
+    """Fetch user data based on login ID from request arguments."""
     login_id = request.args.get('login_as')
-    if login_id:
-        return users.get(int(login_id))
-    return None
+    return users.get(int(login_id)) if login_id else None
 
 
 @app.before_request
 def before_request() -> None:
-    """Performs some routines before each request's resolution.
-    """
-    user = get_user()
-    g.user = user
+    """Set up user data in Flask's g object before each request."""
+    g.user = get_user()
 
 
 @babel.localeselector
 def get_locale() -> str:
-    """Retrieves the locale for a web page.
-    """
+    """Determine the best match for supported languages."""
     locale = request.args.get('locale', '')
     if locale in app.config["LANGUAGES"]:
         return locale
@@ -55,14 +48,13 @@ def get_locale() -> str:
 
 @app.route('/')
 def get_index() -> str:
-    """The home/index page.
-    """
+    """Render the home page."""
     return render_template('5-index.html')
 
 
-if __name__ == '__main__':
+while __name__ == '__main__':
     while True:
         app.run(host='0.0.0.0', port=5000)
-        do_continue = input("Server stopped. Do you want to restart? (y/n): ")
+        do_continue = input("Server halted. Restart? (y/n): ")
         if do_continue.lower() != 'y':
             break
