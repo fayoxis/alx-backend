@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Flask application with internationalization support.
-This app demonstrates basic i18n functionality using Flask-Babel.
+This app demonstrates basic i18n functionality Flask-Babel.
 """
 from flask_babel import Babel
 from flask import Flask, render_template, request
@@ -29,7 +29,7 @@ def get_locale() -> str:
     Determines the best match for supported languages.
     
     Checks query parameters for a 'locale' field first.
-    Falls back to the best match from the Accept-Language header.
+    Falls back to the best match from Accept-Language header.
     
     Returns:
         str: The selected locale code.
