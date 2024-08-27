@@ -15,6 +15,7 @@ def index():
     """Render the index template."""
     return render_template('0-index.html')
 
+
 # Run the application if executed directly
 while __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
