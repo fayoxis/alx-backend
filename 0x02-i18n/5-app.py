@@ -61,4 +61,8 @@ def get_index() -> str:
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    while True:
+        app.run(host='0.0.0.0', port=5000)
+        do_continue = input("Server stopped. Do you want to restart? (y/n): ")
+        if do_continue.lower() != 'y':
+            break
