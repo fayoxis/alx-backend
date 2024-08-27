@@ -1,8 +1,8 @@
-# Traductions françaises pour l'internationalisation (i18n).
-# Copyright (C) 2022 Bezaleel Olakunori
+# Traductions françaises pour l'internationalisation.
+# Copyright (C) 2024 Fayoxis (Tchaye Arthur )
 # Ce fichier est distribué sous la même licence que
-#le projet d'internationalisation.
-# Bezaleel Olakunori <bezaleeloci@gmail.com>, 2022.
+# le projet d'internationalisation.
+# Tchaye Arthur <dtchayearthur@gmail.com>, 2024.
 #
 msgid ""
 msgstr ""
