@@ -12,15 +12,15 @@ let reservationEnabled = false;
 const PORT = 1245;
 
 /**
- * Modifies the number of available seats.
- * @param {number} number - The new number of seats.
+ * change the number of  seats.
+ * @param {number} number -  number of seats.
  */
 const reserveSeat = async (number) => {
   return promisify(client.SET).bind(client)('available_seats', number);
 };
 
 /**
- * Retrieves the number of available seats.
+ * get the number of  seats.
  * @returns {Promise<String>}
  */
 const getCurrentAvailableSeats = async () => {
