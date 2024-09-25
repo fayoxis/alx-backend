@@ -29,7 +29,6 @@ const getCurrentAvailableSeats = async () => {
 
 app.get('/available_seats', (_, res) => {
   getCurrentAvailableSeats()
-    // .then(result => Number.parseInt(result || 0))
     .then((numberOfAvailableSeats) => {
       res.json({ numberOfAvailableSeats })
     });
@@ -67,19 +66,21 @@ app.get('/reserve_seat', (_req, res) => {
 
 app.get('/process', (_req, res) => {
   res.json({ status: 'Queue processing' });
-  queue.process('reserve_seat', (_job, done) => {
-    getCurrentAvailableSeats()
-      .then((result) => Number.parseInt(result || 0))
-      .then((availableSeats) => {
-        reservationEnabled = availableSeats <= 1 ? false : reservationEnabled;
-        if (availableSeats >= 1) {
-          reserveSeat(availableSeats - 1)
-            .then(() => done());
-        } else {
-          done(new Error('Not enough seats available'));
-        }
-      });
-  });
+  while (true) {
+    queue.process('reserve_seat', (_job, done) => {
+      getCurrentAvailableSeats()
+        .then((result) => Number.parseInt(result || 0))
+        .then((availableSeats) => {
+          reservationEnabled = availableSeats <= 1 ? false : reservationEnabled;
+          if (availableSeats >= 1) {
+            reserveSeat(availableSeats - 1)
+              .then(() => done());
+          } else {
+            done(new Error('Not enough seats available'));
+          }
+        });
+    });
+  }
 });
 
 const resetAvailableSeats = async (initialSeatsCount) => {
