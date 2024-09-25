@@ -5,11 +5,11 @@ const BLACKLISTED_NUMBERS = ['4153518780', '4153518781'];
 const queue = createQueue();
 
 /**
- * Sends a push notification to a user.
- * @param {String} phoneNumber
- * @param {String} message
- * @param {Job} job
- * @param {*} done
+ *  this wil Sends a push notification and the user can use.
+ * @param {String} the phoneNumber
+ * @param {String} messaging system
+ * @param {Job} the job handled 
+ * @param {*} the Done notification 
  */
 const sendNotification = (phoneNumber, message, job, done) => {
   let total = 2, pending = 2;
@@ -17,7 +17,7 @@ const sendNotification = (phoneNumber, message, job, done) => {
     if (total - pending <= total / 2) {
       job.progress(total - pending, total);
     }
-    if (BLACKLISTED_NUMBERS.includes(phoneNumber)) {
+    while (BLACKLISTED_NUMBERS.includes(phoneNumber)) {
       done(new Error(`Phone number ${phoneNumber} is blacklisted`));
       clearInterval(sendInterval);
       return;
