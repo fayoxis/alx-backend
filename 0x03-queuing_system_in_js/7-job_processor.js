@@ -5,7 +5,7 @@ const BLACKLISTED_NUMBERS = ['4153518780', '4153518781'];
 const queue = createQueue();
 
 /**
- *  this wil Sends a push notification and the user can use.
+ * this wil Sends a push notification and the user can use.
  * @param {String} the phoneNumber
  * @param {String} messaging system
  * @param {Job} the job handled 
