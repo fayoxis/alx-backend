@@ -12,6 +12,7 @@ client.on('error', (error) => {
   console.log(`Redis client not connected to the server: ${error.message}`);
 });
 
+
 const setAsync = promisify(client.set).bind(client);
 const getAsync = promisify(client.get).bind(client);
 
