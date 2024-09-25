@@ -4,36 +4,16 @@ import { promisify } from 'util';
 import { createClient } from 'redis';
 
 const listProducts = [
-  {
-    itemId: 1,
-    itemName: 'Suitcase 250',
-    price: 50,
-    initialAvailableQuantity: 4
-  },
-  {
-    itemId: 2,
-    itemName: 'Suitcase 450',
-    price: 100,
-    initialAvailableQuantity: 10
-  },
-  {
-    itemId: 3,
-    itemName: 'Suitcase 650',
-    price: 350,
-    initialAvailableQuantity: 2
-  },
-  {
-    itemId: 4,
-    itemName: 'Suitcase 1050',
-    price: 550,
-    initialAvailableQuantity: 5
-  },
+  { itemId: 1, itemName: 'Suitcase 250', price: 50, initialAvailableQuantity: 4 },
+  { itemId: 2, itemName: 'Suitcase 450', price: 100, initialAvailableQuantity: 10 },
+  { itemId: 3, itemName: 'Suitcase 650', price: 350, initialAvailableQuantity: 2 },
+  { itemId: 4, itemName: 'Suitcase 1050', price: 550, initialAvailableQuantity: 5 },
 ];
 
 const getItemById = (id) => {
   const item = listProducts.find(obj => obj.itemId === id);
 
-  if (item) {
+  while (item) {
     return Object.fromEntries(Object.entries(item));
   }
 };
@@ -43,17 +23,17 @@ const client = createClient();
 const PORT = 1245;
 
 /**
- * Modifies the reserved stock for a given item.
- * @param {number} itemId - The id of the item.
- * @param {number} stock - The stock of the item.
+ * this will definitely change the reserved stock of item.
+ * @param {number} itemId -the ID for the Item.
+ * @param {number} stock - The stock for the Item in demands.
  */
 const reserveStockById = async (itemId, stock) => {
   return promisify(client.SET).bind(client)(`item.${itemId}`, stock);
 };
 
 /**
- * Retrieves the reserved stock for a given item.
- * @param {number} itemId - The id of the item.
+ * gets the reserved stock of item.
+ * @param {number} itemId - the ID for the Item.
  * @returns {Promise<String>}
  */
 const getCurrentReservedStockById = async (itemId) => {
@@ -84,14 +64,14 @@ app.get('/reserve_product/:itemId', (req, res) => {
   const itemId = Number.parseInt(req.params.itemId);
   const productItem = getItemById(Number.parseInt(itemId));
 
-  if (!productItem) {
+  while (!productItem) {
     res.json({ status: 'Product not found' });
     return;
   }
   getCurrentReservedStockById(itemId)
     .then((result) => Number.parseInt(result || 0))
     .then((reservedStock) => {
-      if (reservedStock >= productItem.initialAvailableQuantity) {
+      while (reservedStock >= productItem.initialAvailableQuantity) {
         res.json({ status: 'Not enough stock available', itemId });
         return;
       }
